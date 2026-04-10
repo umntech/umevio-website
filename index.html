@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Umevio — Digital Marketing · AI · Organic Growth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <style>
+
+    /* ─── BASE ─────────────────────────────────────────── */
+    html { scroll-behavior: smooth; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+    :focus-visible { outline: 2px solid #D94F3D; outline-offset: 3px; }
+
+    /* ─── TOKENS ───────────────────────────────────────── */
+    :root {
+      --warm-dark:    #1C1208;
+      --ink:          #141010;
+      --rouge:        #D94F3D;
+      --dust:         #F0E9DF;
+      --turmeric:     #E8A838;
+      --sage:         #5C7A5F;
+      --paper:        #FAF6F0;
+      --surface:      #2A1F12;
+      --surface-2:    #332618;
+      --surface-acc:  #3D2C1A;
+      --text:         #F0E9DF;
+      --text-muted:   #A89880;
+      --text-dim:     #6B5A47;
+      --r-sm:         14px;
+      --r-md:         22px;
+      --r-lg:         32px;
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 60px);
+    }
+
+    .label {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--rouge);
+    }
+
+    /* ─── 3-LAYER CLAY SHADOW SYSTEM ──────────────────── */
+    /*
+      Layer 1 (outer diagonal): grounds the element, creates float
+      Layer 2 (inset top):      light hits top surface — "inflated" highlight
+      Layer 3 (inset bottom):   depth/underside shadow
+      Together = pillowy, 3D, tactile clay feel
+    */
+
+    /* ─── CLAY BUTTON ──────────────────────────────────── */
+    .clay-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--rouge);
+      color: var(--text);
+      border-radius: var(--r-sm);
+      border: 3px solid rgba(255,255,255,0.15);
+      box-shadow:
+        4px 8px 10px rgba(0,0,0,0.28),
+        inset 0 2px 0 rgba(255,255,255,0.2),
+        inset 0 -2px 0 rgba(0,0,0,0.18);
+      padding: 14px 28px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 500;
+      font-size: 15px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+      min-height: 44px;
+      white-space: nowrap;
+    }
+    .clay-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow:
+        6px 12px 12px rgba(0,0,0,0.3),
+        inset 0 2px 0 rgba(255,255,255,0.25),
+        inset 0 -2px 0 rgba(0,0,0,0.18);
+      color: var(--text);
+    }
+    .clay-btn:active {
+      transform: translateY(2px) scale(0.97);
+      box-shadow:
+        1px 3px 5px rgba(0,0,0,0.22),
+        inset 0 1px 0 rgba(255,255,255,0.12),
+        inset 0 -1px 0 rgba(0,0,0,0.12);
+    }
+    .clay-btn:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+
+    .clay-btn--ghost {
+      background: rgba(255,255,255,0.04);
+      color: var(--text-muted);
+      border-color: rgba(255,255,255,0.12);
+      box-shadow:
+        4px 8px 10px rgba(0,0,0,0.18),
+        inset 0 2px 0 rgba(255,255,255,0.06),
+        inset 0 -2px 0 rgba(0,0,0,0.12);
+    }
+    .clay-btn--ghost:hover { color: var(--text); background: rgba(255,255,255,0.07); }
+
+    /* ─── NAV ──────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 40px);
+      max-width: 1060px;
+      background: rgba(28,18,8,0.92);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: var(--r-md);
+      border: 3px solid rgba(255,255,255,0.09);
+      box-shadow:
+        6px 14px 14px rgba(0,0,0,0.28),
+        inset 0 2px 0 rgba(255,255,255,0.09),
+        inset 0 -2px 0 rgba(0,0,0,0.22);
+      padding: 12px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .logo-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--rouge);
+      flex-shrink: 0;
+      position: relative;
+      top: -1px; /* nudge to x-height center of DM Serif Display */
+    }
+    .logo-word { font-family: 'DM Serif Display', serif; font-size: 26px; line-height: 1; }
+    .logo-ume  { font-style: italic; color: var(--text); }
+    .logo-vio  { font-style: normal; color: var(--rouge); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: var(--r-sm);
+      transition: color 0.2s ease, background 0.2s ease, box-shadow 0.18s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+      box-shadow: 2px 5px 7px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.09);
+    }
+    .nav-cta {
+      background: var(--rouge) !important;
+      color: var(--text) !important;
+      border: 2px solid rgba(255,255,255,0.15) !important;
+      box-shadow:
+        3px 7px 8px rgba(0,0,0,0.24),
+        inset 0 2px 0 rgba(255,255,255,0.22),
+        inset 0 -2px 0 rgba(0,0,0,0.15) !important;
+      border-radius: var(--r-sm) !important;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease !important;
+    }
+    .nav-cta:hover {
+      transform: translateY(-2px) scale(1.02) !important;
+      background: rgba(255,255,255,0.06) !important;
+      box-shadow:
+        5px 10px 10px rgba(0,0,0,0.26),
+        inset 0 2px 0 rgba(255,255,255,0.26),
+        inset 0 -2px 0 rgba(0,0,0,0.15) !important;
+    }
+
+    /* ─── HERO ─────────────────────────────────────────── */
+    #hero {
+      background: var(--warm-dark);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 120px;
+      padding-bottom: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Hero bottom edge blends into the transition div below */
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, #1C1208);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-blob-1 {
+      position: absolute;
+      width: 520px; height: 520px;
+      border-radius: 62% 38% 46% 54% / 60% 44% 56% 40%;
+      background: rgba(217,79,61,0.06);
+      top: 5%; right: 8%;
+      pointer-events: none; filter: blur(2px); z-index: 0;
+    }
+    .hero-blob-2 {
+      position: absolute;
+      width: 260px; height: 260px;
+      border-radius: 40% 60% 70% 30% / 50% 35% 65% 50%;
+      background: rgba(217,79,61,0.04);
+      bottom: 12%; left: 2%;
+      pointer-events: none; filter: blur(2px); z-index: 0;
+    }
+
+    /* ·u watermark — brand mark ghost behind content */
+    .hero-watermark {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-40%, -48%);
+      display: flex;
+      align-items: flex-start;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+      line-height: 0.85;
+    }
+    .wm-dot {
+      font-family: 'DM Serif Display', serif;
+      font-style: normal;
+      font-size: clamp(60px, 9vw, 130px);
+      color: rgba(217,79,61,0.09);
+      margin-top: 0.08em;
+      margin-right: -0.04em;
+      line-height: 1;
+    }
+    .wm-u {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: clamp(200px, 26vw, 380px);
+      color: rgba(240,233,223,0.035);
+      line-height: 1;
+    }
+
+    /* Split layout */
+    .hero-split {
+      display: grid;
+      grid-template-columns: 55% 45%;
+      gap: clamp(28px, 4vw, 56px);
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+
+    .hero-text-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .hero-overline { margin-bottom: 22px; }
+
+    .hero-headline {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: clamp(32px, 4vw, 54px);
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 22px;
+      letter-spacing: -0.01em;
+      text-align: left;
+    }
+    .hero-headline em { font-style: normal; color: var(--rouge); }
+
+    .hero-sub {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: clamp(15px, 1.7vw, 17px);
+      line-height: 1.75;
+      color: var(--text-muted);
+      max-width: 460px;
+      margin-bottom: 36px;
+      text-align: left;
+    }
+
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+    .hero-note {
+      margin-top: 24px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+    .hero-note span { color: var(--rouge); }
+
+    /* ─── HERO DASHBOARD (right) ───────────────────────── */
+    .hero-dash {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .dash-card {
+      background: var(--surface);
+      border-radius: var(--r-md);
+      border: 3px solid rgba(255,255,255,0.09);
+      box-shadow:
+        5px 12px 12px rgba(0,0,0,0.3),
+        inset 0 3px 0 rgba(255,255,255,0.07),
+        inset 0 -2px 0 rgba(0,0,0,0.22);
+      padding: 20px 22px;
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease;
+    }
+    .dash-card:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        7px 16px 14px rgba(0,0,0,0.32),
+        inset 0 3px 0 rgba(255,255,255,0.09),
+        inset 0 -2px 0 rgba(0,0,0,0.22);
+    }
+
+    .dash-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .d-label {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 7px;
+    }
+    .d-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 3.5vw, 40px);
+      line-height: 1;
+      color: var(--sage);
+      margin-bottom: 3px;
+    }
+    .d-sub {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .d-delta {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 500;
+      font-size: 10px;
+      color: var(--sage);
+      background: rgba(92,122,95,0.15);
+      border-radius: 999px;
+      padding: 2px 8px;
+      margin-top: 6px;
+    }
+    .d-delta--rouge {
+      color: var(--rouge);
+      background: rgba(217,79,61,0.12);
+    }
+
+    /* Bar chart */
+    .mini-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 7px;
+      height: 72px;
+      margin-top: 12px;
+    }
+    .bar-col { display: flex; flex-direction: column; align-items: center; gap: 5px; flex: 1; }
+    .bar {
+      width: 100%;
+      background: var(--sage);
+      border-radius: 5px 5px 3px 3px;
+      border: 1.5px solid rgba(92,122,95,0.35);
+      box-shadow: 0 4px 5px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15);
+      min-width: 16px;
+    }
+    .bar--hi {
+      background: var(--rouge);
+      border-color: rgba(217,79,61,0.35);
+      box-shadow: 0 4px 5px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+    .bar-lbl {
+      font-family: 'Outfit', sans-serif;
+      font-size: 8px;
+      color: var(--text-dim);
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    /* Funnel */
+    .funnel-row { display: flex; align-items: center; gap: 5px; margin-top: 10px; }
+    .funnel-step { flex: 1; }
+    .f-val {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .f-track {
+      height: 5px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+    .f-fill {
+      height: 100%;
+      background: var(--rouge);
+      border-radius: 999px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+    .f-lbl {
+      font-family: 'Outfit', sans-serif;
+      font-size: 9px;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+    .f-arrow { color: var(--text-dim); font-size: 11px; flex-shrink: 0; padding-bottom: 10px; }
+
+    /* ─── SERVICES ─────────────────────────────────────── */
+    #services {
+      background: var(--dust);
+      position: relative;
+      padding: clamp(72px, 9vw, 120px) 0;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-style: normal;
+      font-size: clamp(28px, 4vw, 46px);
+      color: var(--text);
+      margin-top: 12px;
+      line-height: 1.15;
+    }
+    .section-sub {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin-top: 12px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 48px;
+    }
+
+    .service-card {
+      background: var(--surface);
+      border-radius: var(--r-lg);
+      border: 3px solid rgba(255,255,255,0.09);
+      box-shadow:
+        5px 14px 14px rgba(0,0,0,0.2),
+        inset 0 3px 0 rgba(255,255,255,0.07),
+        inset 0 -2px 0 rgba(0,0,0,0.22);
+      padding: 36px 28px;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow:
+        7px 18px 16px rgba(0,0,0,0.24),
+        inset 0 3px 0 rgba(255,255,255,0.09),
+        inset 0 -2px 0 rgba(0,0,0,0.22);
+    }
+    .service-card:focus-visible { outline: 2px solid var(--rouge); outline-offset: 3px; }
+    .service-card--featured { background: var(--surface-acc); }
+
+    .service-icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      background: var(--surface-2);
+      border: 2px solid rgba(255,255,255,0.08);
+      box-shadow: 2px 5px 7px rgba(0,0,0,0.18), inset 0 2px 0 rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 22px;
+    }
+    .service-icon svg { width: 20px; height: 20px; }
+    .service-tag { margin-bottom: 10px; }
+    .service-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px; color: var(--text);
+      margin-bottom: 12px; line-height: 1.2;
+    }
+    .service-desc {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300; font-size: 14px;
+      line-height: 1.65; color: var(--text-muted);
+    }
+
+    /* ─── PROCESS ──────────────────────────────────────── */
+    #process {
+      background: var(--paper);
+      position: relative;
+      overflow: hidden;
+      padding: clamp(72px, 9vw, 120px) 0;
+    }
+
+    .process-blob {
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 55% 45% 35% 65% / 45% 60% 40% 55%;
+      background: rgba(217,79,61,0.05);
+      bottom: -100px; right: -80px;
+      pointer-events: none; filter: blur(2px);
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .process-card {
+      background: var(--warm-dark);
+      border-radius: var(--r-md);
+      border: 3px solid rgba(255,255,255,0.07);
+      box-shadow:
+        4px 10px 12px rgba(0,0,0,0.2),
+        inset 0 2px 0 rgba(255,255,255,0.05),
+        inset 0 -2px 0 rgba(0,0,0,0.16);
+      padding: 28px 22px;
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease;
+      position: relative; z-index: 1;
+    }
+    .process-card:hover {
+      transform: translateY(-4px);
+      box-shadow:
+        5px 14px 14px rgba(0,0,0,0.24),
+        inset 0 2px 0 rgba(255,255,255,0.06),
+        inset 0 -2px 0 rgba(0,0,0,0.16);
+    }
+
+    .step-badge {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: var(--rouge);
+      border: 2px solid rgba(255,255,255,0.15);
+      box-shadow:
+        2px 5px 7px rgba(0,0,0,0.22),
+        inset 0 2px 0 rgba(255,255,255,0.22),
+        inset 0 -1px 0 rgba(0,0,0,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 17px; color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .process-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px; color: var(--text);
+      margin-bottom: 10px; line-height: 1.3;
+    }
+    .process-desc {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300; font-size: 13px;
+      line-height: 1.6; color: var(--text-muted);
+    }
+
+    /* ─── SERVICES + PROCESS LIGHT-MODE OVERRIDES ─────── */
+    #services .section-title, #process .section-title { color: var(--ink); }
+    #services .section-sub,   #process .section-sub   { color: #6B5A47; }
+
+    #services .service-card {
+      background: var(--paper);
+      border-color: rgba(28,18,8,0.09);
+      box-shadow:
+        5px 14px 14px rgba(28,18,8,0.1),
+        inset 0 3px 0 rgba(255,255,255,0.94),
+        inset 0 -2px 0 rgba(0,0,0,0.04);
+    }
+    #services .service-card:hover {
+      box-shadow:
+        7px 18px 16px rgba(28,18,8,0.13),
+        inset 0 3px 0 rgba(255,255,255,0.96),
+        inset 0 -2px 0 rgba(0,0,0,0.04);
+    }
+    #services .service-card--featured { background: var(--dust); }
+    #services .service-icon {
+      background: var(--dust);
+      border-color: rgba(28,18,8,0.09);
+      box-shadow: 2px 5px 7px rgba(28,18,8,0.1), inset 0 2px 0 rgba(255,255,255,0.8);
+    }
+    #services .service-title { color: var(--ink); }
+    #services .service-desc  { color: #6B5A47; }
+
+    #process .process-card {
+      background: var(--dust);
+      border-color: rgba(28,18,8,0.08);
+      box-shadow:
+        4px 10px 12px rgba(28,18,8,0.1),
+        inset 0 2px 0 rgba(255,255,255,0.88),
+        inset 0 -2px 0 rgba(0,0,0,0.04);
+    }
+    #process .process-card:hover {
+      box-shadow:
+        5px 14px 14px rgba(28,18,8,0.13),
+        inset 0 2px 0 rgba(255,255,255,0.9),
+        inset 0 -2px 0 rgba(0,0,0,0.04);
+    }
+    #process .process-title { color: var(--ink); }
+    #process .process-desc  { color: #6B5A47; }
+    #process .process-blob  { background: rgba(217,79,61,0.04); }
+
+    /* ─── DARK → LIGHT TRANSITION ──────────────────────── */
+    .to-light {
+      height: 320px;
+      background: linear-gradient(
+        180deg,
+        #1C1208 0%,
+        #271808 8%,
+        #3A2410 20%,
+        #573516 32%,
+        #7A5028 44%,
+        #9E7045 55%,
+        #BF9468 65%,
+        #D4B48A 75%,
+        #E4CEB0 85%,
+        #EEE2D2 92%,
+        #F0E9DF 100%
+      );
+    }
+
+    /* ─── ABOUT (DUST / LIGHT) ─────────────────────────── */
+    #about {
+      background: var(--dust);
+      position: relative;
+      overflow: hidden;
+      padding: clamp(72px, 9vw, 120px) 0;
+    }
+
+    .about-blob {
+      position: absolute;
+      width: 350px; height: 350px;
+      border-radius: 40% 60% 70% 30% / 50% 35% 65% 50%;
+      background: rgba(217,79,61,0.07);
+      top: -60px; left: -80px;
+      pointer-events: none; filter: blur(2px);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+      position: relative; z-index: 1;
+    }
+
+    /* Light-mode text overrides */
+    #about .section-title { color: var(--ink); }
+    #about .section-sub   { color: #6B5A47; }
+    #about .label         { color: var(--rouge); }
+    .about-cta            { margin-top: 36px; }
+    .about-text .section-sub { max-width: 100%; }
+
+    /* Rouge button on light bg — same token, works fine */
+    .clay-btn--on-light {
+      box-shadow:
+        4px 8px 10px rgba(28,18,8,0.18),
+        inset 0 2px 0 rgba(255,255,255,0.3),
+        inset 0 -2px 0 rgba(0,0,0,0.12);
+    }
+    .clay-btn--on-light:hover {
+      box-shadow:
+        6px 12px 12px rgba(28,18,8,0.22),
+        inset 0 2px 0 rgba(255,255,255,0.35),
+        inset 0 -2px 0 rgba(0,0,0,0.12);
+    }
+
+    /* Stat cards on light bg */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .stat-card {
+      background: var(--paper);
+      border-radius: var(--r-md);
+      border: 3px solid rgba(28,18,8,0.08);
+      box-shadow:
+        4px 12px 14px rgba(28,18,8,0.1),
+        inset 0 3px 0 rgba(255,255,255,0.94),
+        inset 0 -2px 0 rgba(0,0,0,0.04);
+      padding: 24px 20px;
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .stat-card:hover { transform: translateY(-3px); }
+
+    .stat-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 40px; line-height: 1;
+      margin-bottom: 8px;
+    }
+    .c-rouge    { color: var(--rouge); }
+    .c-turmeric { color: var(--turmeric); }
+    .c-sage     { color: var(--sage); }
+    .c-ink      { color: var(--ink); }
+
+    .stat-desc {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300; font-size: 13px;
+      color: var(--text-dim); line-height: 1.5;
+    }
+
+    /* ─── FOOTER (PAPER) ───────────────────────────────── */
+    footer {
+      background: var(--paper);
+      border-top: 1px solid rgba(28,18,8,0.08);
+      padding: 44px 0 28px;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .logo--light .logo-ume { color: var(--ink); }
+
+    .footer-links { display: flex; gap: 2px; list-style: none; }
+    .footer-links a {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px; color: var(--text-dim);
+      text-decoration: none; padding: 8px 12px;
+      border-radius: 8px; cursor: pointer;
+      transition: color 0.2s ease;
+      min-height: 44px; display: flex; align-items: center;
+    }
+    .footer-links a:hover { color: var(--ink); }
+
+    .footer-handle {
+      font-family: 'Outfit', sans-serif;
+      font-size: 12px; color: var(--text-dim);
+      letter-spacing: 0.03em;
+    }
+    .footer-handle span { color: var(--rouge); }
+
+    /* ─── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 960px) {
+      .hero-split { grid-template-columns: 1fr; }
+      .hero-dash  { display: none; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .process-grid  { grid-template-columns: 1fr 1fr; }
+      .about-grid    { grid-template-columns: 1fr; gap: 36px; }
+    }
+    @media (max-width: 640px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .nav-links     { display: none; }
+      nav            { padding: 12px 20px; }
+    }
+    @media (max-width: 480px) {
+      .process-grid { grid-template-columns: 1fr; }
+      .stat-grid    { grid-template-columns: 1fr 1fr; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ──────────────────────────────────────────────── -->
+<nav aria-label="Site navigation">
+  <a href="#" class="logo" aria-label="Umevio home">
+    <div class="logo-dot" aria-hidden="true"></div>
+    <div class="logo-word">
+      <span class="logo-ume">ume</span><span class="logo-vio">vio</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">What I cover</a></li>
+    <li><a href="#process">How it works</a></li>
+    <li><a href="#about">About</a></li>
+    <li>
+      <a href="https://instagram.com/helloumevio" class="nav-cta" aria-label="Follow on Instagram">
+        Follow @helloumevio
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-blob-1" aria-hidden="true"></div>
+  <div class="hero-blob-2" aria-hidden="true"></div>
+  <!-- ·u brand watermark -->
+  <div class="hero-watermark" aria-hidden="true">
+    <span class="wm-dot">·</span><span class="wm-u">u</span>
+  </div>
+
+  <div class="container">
+    <div class="hero-split">
+
+      <!-- LEFT: text -->
+      <div class="hero-text-col">
+        <p class="label hero-overline">Digital Marketing · AI Systems · Organic Growth</p>
+        <h1 class="hero-headline">
+          Marketing advice<br>
+          that doesn't <em>waste</em><br>
+          your time.
+        </h1>
+        <p class="hero-sub">
+          Practical guides on Meta Ads, Google Ads, AI tools, and building an audience —
+          explained without the agency jargon, without the markup.
+        </p>
+        <div class="hero-actions">
+          <a href="#services" class="clay-btn">See what I cover</a>
+          <a href="https://instagram.com/helloumevio" class="clay-btn clay-btn--ghost"
+             aria-label="Follow @helloumevio on Instagram">Follow @helloumevio →</a>
+        </div>
+        <p class="hero-note">Building in public · <span>@helloumevio</span> · umevio.com</p>
+      </div>
+
+      <!-- RIGHT: performance marketing mini-dashboard -->
+      <div class="hero-dash" aria-hidden="true">
+
+        <!-- Row 1: two metric cards -->
+        <div class="dash-row">
+          <div class="dash-card">
+            <div class="d-label">Avg. ROAS</div>
+            <div class="d-value">3.2×</div>
+            <div class="d-sub">Meta Ads · 30d</div>
+            <div class="d-delta">↑ +18% MoM</div>
+          </div>
+          <div class="dash-card">
+            <div class="d-label">CPL Drop</div>
+            <div class="d-value" style="font-size: clamp(24px,3vw,34px);">42%</div>
+            <div class="d-sub">vs. prev period</div>
+            <div class="d-delta d-delta--rouge">↓ cost/lead</div>
+          </div>
+        </div>
+
+        <!-- Row 2: bar chart -->
+        <div class="dash-card">
+          <div class="d-label">CTR by Campaign Stage</div>
+          <div class="mini-chart">
+            <div class="bar-col">
+              <div class="bar" style="height:40px;"></div>
+              <div class="bar-lbl">TOFU</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar" style="height:55px;"></div>
+              <div class="bar-lbl">MOFU</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar bar--hi" style="height:70px;"></div>
+              <div class="bar-lbl">BOFU</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar" style="height:46px;"></div>
+              <div class="bar-lbl">Retgt</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar" style="height:34px;"></div>
+              <div class="bar-lbl">DBA</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3: funnel -->
+        <div class="dash-card">
+          <div class="d-label">Campaign Funnel</div>
+          <div class="funnel-row">
+            <div class="funnel-step">
+              <div class="f-val">48K</div>
+              <div class="f-track"><div class="f-fill" style="width:100%;"></div></div>
+              <div class="f-lbl">Impressions</div>
+            </div>
+            <div class="f-arrow">›</div>
+            <div class="funnel-step">
+              <div class="f-val">3.2K</div>
+              <div class="f-track"><div class="f-fill" style="width:66%;"></div></div>
+              <div class="f-lbl">Clicks</div>
+            </div>
+            <div class="f-arrow">›</div>
+            <div class="funnel-step">
+              <div class="f-val">186</div>
+              <div class="f-track"><div class="f-fill" style="width:34%;"></div></div>
+              <div class="f-lbl">Conversions</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /hero-dash -->
+    </div><!-- /hero-split -->
+  </div>
+</section>
+
+<!-- ─── DARK → LIGHT GRADIENT BRIDGE ─────────────────────── -->
+<div class="to-light" aria-hidden="true"></div>
+
+<!-- ─── SERVICES ──────────────────────────────────────────── -->
+<section id="services">
+  <div class="container">
+    <p class="label">What I cover</p>
+    <h2 class="section-title">Three areas.<br>All practical.</h2>
+    <p class="section-sub">No theory for theory's sake. Every topic is something you can apply to your business this week.</p>
+
+    <div class="services-grid">
+
+      <div class="service-card" tabindex="0" role="article">
+        <div class="service-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D94F3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <p class="label service-tag">AI for Marketers</p>
+        <h3 class="service-title">AI tools you'll actually use</h3>
+        <p class="service-desc">Which tools work, which ones are hype, and how to plug them into real marketing workflows — without spending hours on prompts that go nowhere.</p>
+      </div>
+
+      <div class="service-card" tabindex="0" role="article">
+        <div class="service-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D94F3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
+          </svg>
+        </div>
+        <p class="label service-tag">Performance Marketing</p>
+        <h3 class="service-title">Ads that don't burn money</h3>
+        <p class="service-desc">Meta Ads and Google Ads — how they actually work, what the metrics mean, and what to do when your campaign isn't performing the way it should.</p>
+      </div>
+
+      <div class="service-card service-card--featured" tabindex="0" role="article">
+        <div class="service-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D94F3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <p class="label service-tag">Organic Growth</p>
+        <h3 class="service-title">Build an audience that trusts you</h3>
+        <p class="service-desc">Content strategy, Instagram growth, and community building — done without paying for reach or pretending you have it all figured out.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROCESS ───────────────────────────────────────────── -->
+<section id="process">
+  <div class="process-blob" aria-hidden="true"></div>
+  <div class="container">
+    <p class="label">How it works</p>
+    <h2 class="section-title">The Umevio approach</h2>
+    <p class="section-sub">No methodology. No framework with a name. Just how I think about marketing — and how I share it.</p>
+
+    <div class="process-grid">
+
+      <div class="process-card">
+        <div class="step-badge" aria-label="Step 1">1</div>
+        <h3 class="process-title">Learn in public</h3>
+        <p class="process-desc">Everything shared is tested, not theorized. If something didn't work, I'll say so.</p>
+      </div>
+
+      <div class="process-card">
+        <div class="step-badge" aria-label="Step 2">2</div>
+        <h3 class="process-title">No jargon tax</h3>
+        <p class="process-desc">Complex ideas explained simply. If I can't explain it plainly, I don't understand it well enough yet.</p>
+      </div>
+
+      <div class="process-card">
+        <div class="step-badge" aria-label="Step 3">3</div>
+        <h3 class="process-title">Practical first</h3>
+        <p class="process-desc">Theory only matters if you can act on it. Every post ends with something you can do today.</p>
+      </div>
+
+      <div class="process-card">
+        <div class="step-badge" aria-label="Step 4">4</div>
+        <h3 class="process-title">Build as you go</h3>
+        <p class="process-desc">You don't need everything figured out to start. Neither do I — that's the whole point.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT (DUST / LIGHT) ──────────────────────────────── -->
+<section id="about">
+  <div class="about-blob" aria-hidden="true"></div>
+  <div class="container">
+    <div class="about-grid">
+
+      <div class="about-text">
+        <p class="label">About</p>
+        <h2 class="section-title">Early stage.<br>Learning out loud.</h2>
+        <p class="section-sub">Umevio is a personal brand in digital marketing and AI — built in public from the start. Not a finished product. A work in progress that shares what it's learning as it goes.</p>
+        <p class="section-sub" style="margin-top:14px;">The goal: make marketing less intimidating for people who are figuring it out without a big budget or agency backing.</p>
+        <div class="about-cta">
+          <a href="https://instagram.com/helloumevio" class="clay-btn clay-btn--on-light"
+             aria-label="Follow Umevio on Instagram">Follow on Instagram →</a>
+        </div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-number c-rouge">4</div>
+          <div class="stat-desc">content pillars — no scatter, no confusion</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number c-turmeric">6</div>
+          <div class="stat-desc">posts per week, every single week</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number c-sage">0</div>
+          <div class="stat-desc">paid promotion — 100% organic so far</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number c-ink">1</div>
+          <div class="stat-desc">goal — make marketing less confusing</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER (PAPER) ────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+
+      <a href="#" class="logo logo--light" aria-label="Umevio home">
+        <div class="logo-dot" aria-hidden="true"></div>
+        <div class="logo-word">
+          <span class="logo-ume">ume</span><span class="logo-vio">vio</span>
+        </div>
+      </a>
+
+      <ul class="footer-links">
+        <li><a href="#services">What I cover</a></li>
+        <li><a href="#process">How it works</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="mailto:hello@umevio.com">hello@umevio.com</a></li>
+      </ul>
+
+      <p class="footer-handle">Instagram · <span>@helloumevio</span> · umevio.com</p>
+
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
