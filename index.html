@@ -348,6 +348,7 @@
         inset 0 -2px 0 rgba(0,0,0,0.22);
       padding: 20px 22px;
       transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease;
+      will-change: transform;
     }
     .dash-card:hover {
       transform: translateY(-2px);
@@ -503,6 +504,7 @@
       padding: 36px 28px;
       cursor: pointer;
       transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease;
+      will-change: transform;
     }
     .service-card:hover {
       transform: translateY(-5px);
@@ -571,6 +573,7 @@
       padding: 28px 22px;
       transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease;
       position: relative; z-index: 1;
+      will-change: transform;
     }
     .process-card:hover {
       transform: translateY(-4px);
@@ -733,6 +736,7 @@
         inset 0 -2px 0 rgba(0,0,0,0.04);
       padding: 24px 20px;
       transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+      will-change: transform;
     }
     .stat-card:hover { transform: translateY(-3px); }
 
@@ -802,6 +806,25 @@
     @media (max-width: 480px) {
       .process-grid { grid-template-columns: 1fr; }
       .stat-grid    { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ─── SCROLL REVEAL (Emil Kowalski) ────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(12px) scale(0.97);
+      transition: opacity 0.45s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.45s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    /* Stagger for grids — nth-child offsets within each parent grid */
+    .reveal:nth-child(2) { transition-delay: 80ms; }
+    .reveal:nth-child(3) { transition-delay: 160ms; }
+    .reveal:nth-child(4) { transition-delay: 240ms; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
     }
 
   </style>
@@ -947,7 +970,7 @@
 
     <div class="services-grid">
 
-      <div class="service-card" tabindex="0" role="article">
+      <div class="service-card reveal" tabindex="0" role="article">
         <div class="service-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="#D94F3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
@@ -958,7 +981,7 @@
         <p class="service-desc">Which tools work, which ones are hype, and how to plug them into real marketing workflows — without spending hours on prompts that go nowhere.</p>
       </div>
 
-      <div class="service-card" tabindex="0" role="article">
+      <div class="service-card reveal" tabindex="0" role="article">
         <div class="service-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="#D94F3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
@@ -969,7 +992,7 @@
         <p class="service-desc">Meta Ads and Google Ads — how they actually work, what the metrics mean, and what to do when your campaign isn't performing the way it should.</p>
       </div>
 
-      <div class="service-card service-card--featured" tabindex="0" role="article">
+      <div class="service-card service-card--featured reveal" tabindex="0" role="article">
         <div class="service-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="#D94F3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
@@ -996,25 +1019,25 @@
 
     <div class="process-grid">
 
-      <div class="process-card">
+      <div class="process-card reveal">
         <div class="step-badge" aria-label="Step 1">1</div>
         <h3 class="process-title">Learn in public</h3>
         <p class="process-desc">Everything shared is tested, not theorized. If something didn't work, I'll say so.</p>
       </div>
 
-      <div class="process-card">
+      <div class="process-card reveal">
         <div class="step-badge" aria-label="Step 2">2</div>
         <h3 class="process-title">No jargon tax</h3>
         <p class="process-desc">Complex ideas explained simply. If I can't explain it plainly, I don't understand it well enough yet.</p>
       </div>
 
-      <div class="process-card">
+      <div class="process-card reveal">
         <div class="step-badge" aria-label="Step 3">3</div>
         <h3 class="process-title">Practical first</h3>
         <p class="process-desc">Theory only matters if you can act on it. Every post ends with something you can do today.</p>
       </div>
 
-      <div class="process-card">
+      <div class="process-card reveal">
         <div class="step-badge" aria-label="Step 4">4</div>
         <h3 class="process-title">Build as you go</h3>
         <p class="process-desc">You don't need everything figured out to start. Neither do I — that's the whole point.</p>
@@ -1042,19 +1065,19 @@
       </div>
 
       <div class="stat-grid">
-        <div class="stat-card">
+        <div class="stat-card reveal">
           <div class="stat-number c-rouge">4</div>
           <div class="stat-desc">content pillars — no scatter, no confusion</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card reveal">
           <div class="stat-number c-turmeric">6</div>
           <div class="stat-desc">posts per week, every single week</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card reveal">
           <div class="stat-number c-sage">0</div>
           <div class="stat-desc">paid promotion — 100% organic so far</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card reveal">
           <div class="stat-number c-ink">1</div>
           <div class="stat-desc">goal — make marketing less confusing</div>
         </div>
@@ -1088,6 +1111,15 @@
     </div>
   </div>
 </footer>
+
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }),
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
