@@ -2153,7 +2153,8 @@
     const navRect = siteNav.getBoundingClientRect();
     mobileNav.style.top  = (navRect.bottom + 10) + 'px';
     mobileNav.style.left = '';
-    mobileNav.style.right = (window.innerWidth - navRect.right) + 'px';
+    const btnRect = hamburger.getBoundingClientRect();
+    mobileNav.style.right = (window.innerWidth - btnRect.right) + 'px';
   }
 
   function toggleMenu(open) {
