@@ -2153,7 +2153,7 @@
     const navRect = siteNav.getBoundingClientRect();
     mobileNav.style.top  = (navRect.bottom + 10) + 'px';
     mobileNav.style.left = '';
-    mobileNav.style.right = (window.innerWidth - navRect.right + window.innerWidth * 0.05) + 'px';
+    mobileNav.style.right = (window.innerWidth - navRect.right) + 'px';
   }
 
   function toggleMenu(open) {
