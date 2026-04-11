@@ -1304,7 +1304,7 @@
     .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); width: 100%; }
 
-    /* Mobile nav — dropdown from hamburger */
+    /* Mobile nav — claymorphism dropdown */
     .mobile-nav-backdrop {
       display: none;
       position: fixed;
@@ -1318,26 +1318,29 @@
     .mobile-nav {
       display: none;
       position: fixed;
-      /* sits just below the nav pill: 16px top + ~56px nav height + 8px gap */
-      top: 82px;
+      /* top & right set by JS to sit 10px below nav pill, right-edge aligned */
+      top: 90px;
       right: 20px;
-      width: 200px;
+      width: 210px;
       background: rgba(28,18,8,0.97);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1.5px solid rgba(255,255,255,0.1);
-      border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 3px solid rgba(255,255,255,0.11);
+      border-radius: var(--r-md);
+      box-shadow:
+        6px 16px 24px rgba(0,0,0,0.45),
+        inset 0 2px 0 rgba(255,255,255,0.1),
+        inset 0 -2px 0 rgba(0,0,0,0.25);
       z-index: 92;
-      transform: scale(0.88) translateY(-10px);
+      transform: scale(0.86) translateY(-8px);
       transform-origin: top right;
       opacity: 0;
       pointer-events: none;
-      transition: transform 0.28s cubic-bezier(0.16,1,0.3,1),
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1),
                   opacity 0.22s ease;
       flex-direction: column;
       align-items: stretch;
-      gap: 0;
+      gap: 2px;
       padding: 8px;
     }
     .mobile-nav.open {
@@ -1348,12 +1351,12 @@
     .mobile-nav a {
       font-family: 'Outfit', sans-serif;
       font-style: normal;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 500;
       color: var(--text-muted);
       text-decoration: none;
-      padding: 11px 14px;
-      border-radius: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
       transition: background 0.15s, color 0.15s;
       width: 100%;
     }
@@ -1361,6 +1364,12 @@
     .mobile-nav a:active {
       background: rgba(255,255,255,0.07);
       color: var(--text);
+    }
+    .mobile-nav-divider {
+      width: calc(100% - 28px);
+      height: 1px;
+      background: rgba(255,255,255,0.09);
+      margin: 4px 14px;
     }
     .mobile-nav .mobile-nav-cta {
       font-family: 'Outfit', sans-serif;
@@ -1370,20 +1379,23 @@
       background: var(--rouge);
       color: var(--text) !important;
       text-align: center;
-      border-radius: 10px;
-      border: none;
+      border-radius: 12px;
+      border: 3px solid rgba(255,255,255,0.15);
       padding: 11px 14px;
-      box-shadow: 0 4px 10px rgba(217,79,61,0.35), inset 0 1px 0 rgba(255,255,255,0.18);
+      box-shadow:
+        4px 8px 10px rgba(0,0,0,0.28),
+        inset 0 2px 0 rgba(255,255,255,0.2),
+        inset 0 -2px 0 rgba(0,0,0,0.18);
       margin-top: 2px;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease, background 0.15s;
     }
     .mobile-nav .mobile-nav-cta:hover {
       background: #c44434 !important;
-    }
-    .mobile-nav-divider {
-      width: calc(100% - 28px);
-      height: 1px;
-      background: rgba(255,255,255,0.08);
-      margin: 4px 14px;
+      transform: translateY(-2px);
+      box-shadow:
+        6px 12px 14px rgba(0,0,0,0.32),
+        inset 0 2px 0 rgba(255,255,255,0.22),
+        inset 0 -2px 0 rgba(0,0,0,0.18) !important;
     }
 
     /* ─── RESPONSIVE ───────────────────────────────────── */
@@ -2135,8 +2147,16 @@
   const hamburger = document.getElementById('nav-hamburger');
   const mobileNav = document.getElementById('mobile-nav');
   const mobileNavBackdrop = document.getElementById('mobile-nav-backdrop');
+  const siteNav = document.querySelector('nav[aria-label="Site navigation"]');
+
+  function positionDropdown() {
+    const navRect = siteNav.getBoundingClientRect();
+    mobileNav.style.top  = (navRect.bottom + 10) + 'px';
+    mobileNav.style.right = (window.innerWidth - navRect.right) + 'px';
+  }
 
   function toggleMenu(open) {
+    if (open) positionDropdown();
     hamburger.classList.toggle('open', open);
     mobileNav.classList.toggle('open', open);
     mobileNavBackdrop.classList.toggle('open', open);
