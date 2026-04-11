@@ -1304,7 +1304,7 @@
     .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); width: 100%; }
 
-    /* Mobile nav — claymorphism dropdown */
+    /* Mobile nav — full-width slide-down panel */
     .mobile-nav-backdrop {
       display: none;
       position: fixed;
@@ -1312,55 +1312,50 @@
       z-index: 91;
       pointer-events: none;
     }
-    .mobile-nav-backdrop.open {
-      pointer-events: all;
-    }
+    .mobile-nav-backdrop.open { pointer-events: all; }
+
     .mobile-nav {
       display: none;
       position: fixed;
-      /* nav: top 16px + ~52px height + 10px gap = 78px */
-      top: 80px;
-      right: 20px;
-      width: 210px;
-      max-width: calc(100vw - 40px);
-      overflow: hidden;
+      /* match nav pill exactly: same left/width, sit just below it */
+      left: 50%;
+      top: 78px;
+      width: calc(100% - 40px);
       background: rgba(28,18,8,0.97);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       border: 3px solid rgba(255,255,255,0.11);
       border-radius: var(--r-md);
       box-shadow:
-        6px 16px 24px rgba(0,0,0,0.45),
+        0 12px 32px rgba(0,0,0,0.45),
         inset 0 2px 0 rgba(255,255,255,0.1),
-        inset 0 -2px 0 rgba(0,0,0,0.25);
+        inset 0 -2px 0 rgba(0,0,0,0.22);
       z-index: 92;
-      transform: scale(0.86) translateY(-8px);
-      transform-origin: top right;
+      /* slide from nav bar downward */
+      transform: translateX(-50%) translateY(-12px);
       opacity: 0;
       pointer-events: none;
-      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1),
-                  opacity 0.22s ease;
+      transition: transform 0.32s cubic-bezier(0.16,1,0.3,1),
+                  opacity 0.24s ease;
       flex-direction: column;
       align-items: stretch;
       gap: 2px;
-      padding: 8px;
+      padding: 10px;
     }
     .mobile-nav.open {
-      transform: scale(1) translateY(0);
+      transform: translateX(-50%) translateY(0);
       opacity: 1;
       pointer-events: all;
     }
     .mobile-nav a {
       font-family: 'Outfit', sans-serif;
-      font-style: normal;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 500;
       color: var(--text-muted);
       text-decoration: none;
-      padding: 10px 14px;
+      padding: 11px 16px;
       border-radius: 12px;
       transition: background 0.15s, color 0.15s;
-      width: 100%;
     }
     .mobile-nav a:hover,
     .mobile-nav a:active {
@@ -1368,36 +1363,30 @@
       color: var(--text);
     }
     .mobile-nav-divider {
-      width: calc(100% - 28px);
       height: 1px;
       background: rgba(255,255,255,0.09);
-      margin: 4px 14px;
+      margin: 4px 16px;
     }
     .mobile-nav .mobile-nav-cta {
       font-family: 'Outfit', sans-serif;
-      font-style: normal;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
       background: var(--rouge);
       color: var(--text) !important;
       text-align: center;
       border-radius: 12px;
       border: 3px solid rgba(255,255,255,0.15);
-      padding: 11px 14px;
+      padding: 12px 16px;
       box-shadow:
         4px 8px 10px rgba(0,0,0,0.28),
         inset 0 2px 0 rgba(255,255,255,0.2),
         inset 0 -2px 0 rgba(0,0,0,0.18);
       margin-top: 2px;
-      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease, background 0.15s;
+      transition: background 0.15s, transform 0.2s;
     }
     .mobile-nav .mobile-nav-cta:hover {
       background: #c44434 !important;
-      transform: translateY(-2px);
-      box-shadow:
-        6px 12px 14px rgba(0,0,0,0.32),
-        inset 0 2px 0 rgba(255,255,255,0.22),
-        inset 0 -2px 0 rgba(0,0,0,0.18) !important;
+      transform: translateY(-1px);
     }
 
     /* ─── RESPONSIVE ───────────────────────────────────── */
