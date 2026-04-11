@@ -1805,9 +1805,7 @@
 
       <!-- Right: form -->
       <div class="contact-form-wrap">
-        <!-- TODO: Replace form action="#" with your Google Form POST endpoint or Formspree URL -->
-        <!-- Recommended: https://formspree.io (free tier, sends submissions to email) -->
-        <form id="contact-form" action="#" method="POST" novalidate>
+        <form id="contact-form" action="https://formspree.io/f/xjgpnglz" method="POST">
 
           <div class="form-row">
             <div class="form-group">
@@ -1949,17 +1947,30 @@
   );
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  /* ─── Contact Form Submit ───────────────────────────────── */
-  /* TODO: Tomorrow — connect to Google Form or Formspree:
-     Option A (recommended): Sign up at formspree.io, get your endpoint,
-                              replace action="#" with action="https://formspree.io/f/YOUR_ID"
-                              and add method="POST". Remove the preventDefault below.
-     Option B: Google Form — get the pre-fill URL and map field names to entry IDs.
-  */
-  document.getElementById('contact-form').addEventListener('submit', function(e) {
-    e.preventDefault(); // Remove this line once the real endpoint is connected
-    this.style.display = 'none';
-    document.getElementById('form-success').style.display = 'block';
+  /* ─── Contact Form Submit (Formspree) ──────────────────── */
+  document.getElementById('contact-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const form = this;
+    const btn = form.querySelector('.form-submit');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        form.style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+      } else {
+        btn.textContent = 'Something went wrong — try emailing hello@umevio.com';
+        btn.disabled = false;
+      }
+    } catch {
+      btn.textContent = 'Something went wrong — try emailing hello@umevio.com';
+      btn.disabled = false;
+    }
   });
 </script>
 
