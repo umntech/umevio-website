@@ -1304,63 +1304,76 @@
     .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); width: 100%; }
 
-    /* Mobile nav — full screen overlay */
+    /* Mobile nav — right-side drawer */
+    .mobile-nav-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0);
+      z-index: 91;
+      transition: background 0.35s ease;
+      pointer-events: none;
+    }
+    .mobile-nav-backdrop.open {
+      background: rgba(0,0,0,0.55);
+      pointer-events: all;
+    }
     .mobile-nav {
       display: none;
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: var(--warm-dark);
-      z-index: 90;
-      opacity: 0;
+      top: 0; right: 0; bottom: 0;
+      width: min(300px, 85vw);
+      background: #1e1208;
+      border-left: 1px solid rgba(255,255,255,0.07);
+      box-shadow: -8px 0 40px rgba(0,0,0,0.45);
+      z-index: 92;
+      transform: translateX(100%);
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: transform 0.38s cubic-bezier(0.16,1,0.3,1);
       flex-direction: column;
       justify-content: center;
-      align-items: center;
-      gap: 6px;
-      padding: 80px 32px 48px;
+      align-items: flex-start;
+      gap: 4px;
+      padding: 88px 32px 48px;
     }
     .mobile-nav.open {
-      opacity: 1;
+      transform: translateX(0);
       pointer-events: all;
     }
     .mobile-nav a {
       font-family: 'DM Serif Display', serif;
       font-style: italic;
-      font-size: 28px;
+      font-size: 26px;
       color: var(--text-muted);
       text-decoration: none;
-      padding: 10px 20px;
+      padding: 10px 0;
       border-radius: var(--r-sm);
-      transition: color 0.2s;
-      text-align: center;
+      transition: color 0.2s, transform 0.2s;
       width: 100%;
     }
     .mobile-nav a:hover,
-    .mobile-nav a:active { color: var(--text); }
+    .mobile-nav a:active { color: var(--text); transform: translateX(4px); }
     .mobile-nav .mobile-nav-cta {
       font-family: 'Outfit', sans-serif;
       font-style: normal;
-      font-size: 16px;
-      font-weight: 500;
+      font-size: 15px;
+      font-weight: 600;
       background: var(--rouge);
       color: var(--text) !important;
       text-align: center;
-      margin-top: 16px;
+      margin-top: 24px;
       border-radius: var(--r-sm);
-      border: 3px solid rgba(255,255,255,0.15);
-      padding: 14px 36px;
+      border: 2px solid rgba(255,255,255,0.15);
+      padding: 13px 28px;
       box-shadow: 4px 8px 10px rgba(0,0,0,0.28), inset 0 2px 0 rgba(255,255,255,0.2);
-    }
-    /* Divider line above CTA */
-    .mobile-nav .mobile-nav-cta::before {
-      display: none;
+      width: 100%;
+      transform: none !important;
     }
     .mobile-nav-divider {
-      width: 40px;
+      width: 100%;
       height: 1px;
-      background: rgba(255,255,255,0.1);
-      margin: 10px auto;
+      background: rgba(255,255,255,0.08);
+      margin: 16px 0 8px;
     }
 
     /* ─── RESPONSIVE ───────────────────────────────────── */
@@ -1412,10 +1425,11 @@
       .services-grid { grid-template-columns: 1fr; }
 
       /* Hamburger visible, desktop links hidden */
-      .nav-hamburger { display: flex; }
-      .nav-links     { display: none; }
-      .mobile-nav    { display: flex; }
-      nav            { padding: 10px 16px; }
+      .nav-hamburger        { display: flex; }
+      .nav-links            { display: none; }
+      .mobile-nav           { display: flex; }
+      .mobile-nav-backdrop  { display: block; }
+      nav                   { padding: 10px 16px; }
 
       .form-row      { grid-template-columns: 1fr; }
       .trust-note    { display: none; }
@@ -1498,7 +1512,10 @@
   </button>
 </nav>
 
-<!-- Mobile Nav Overlay -->
+<!-- Mobile Nav Backdrop -->
+<div class="mobile-nav-backdrop" id="mobile-nav-backdrop" aria-hidden="true"></div>
+
+<!-- Mobile Nav Drawer -->
 <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
   <a href="#services">Services</a>
   <a href="#process">How it works</a>
@@ -2107,10 +2124,12 @@
   /* ─── Hamburger Menu ────────────────────────────────────── */
   const hamburger = document.getElementById('nav-hamburger');
   const mobileNav = document.getElementById('mobile-nav');
+  const mobileNavBackdrop = document.getElementById('mobile-nav-backdrop');
 
   function toggleMenu(open) {
     hamburger.classList.toggle('open', open);
     mobileNav.classList.toggle('open', open);
+    mobileNavBackdrop.classList.toggle('open', open);
     hamburger.setAttribute('aria-expanded', open);
     document.body.style.overflow = open ? 'hidden' : '';
   }
@@ -2122,14 +2141,8 @@
     a.addEventListener('click', () => toggleMenu(false));
   });
 
-  // Close on outside tap
-  document.addEventListener('click', e => {
-    if (mobileNav.classList.contains('open') &&
-        !mobileNav.contains(e.target) &&
-        !hamburger.contains(e.target)) {
-      toggleMenu(false);
-    }
-  });
+  // Close on backdrop tap
+  mobileNavBackdrop.addEventListener('click', () => toggleMenu(false));
 
   /* ─── Scroll Reveal ─────────────────────────────────────── */
   const observer = new IntersectionObserver(
