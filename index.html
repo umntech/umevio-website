@@ -1318,10 +1318,10 @@
     .mobile-nav {
       display: none;
       position: fixed;
-      /* top & right set by JS to sit 10px below nav pill, right-edge aligned */
+      /* top set by JS; right matches nav pill's own right margin exactly */
       top: 90px;
       right: 20px;
-      width: 210px;
+      width: min(210px, calc(100vw - 40px));
       background: rgba(28,18,8,0.97);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
@@ -2151,10 +2151,7 @@
 
   function positionDropdown() {
     const navRect = siteNav.getBoundingClientRect();
-    mobileNav.style.top  = (navRect.bottom + 10) + 'px';
-    mobileNav.style.left = '';
-    const btnRect = hamburger.getBoundingClientRect();
-    mobileNav.style.right = (window.innerWidth - btnRect.right) + 'px';
+    mobileNav.style.top = (navRect.bottom + 10) + 'px';
   }
 
   function toggleMenu(open) {
