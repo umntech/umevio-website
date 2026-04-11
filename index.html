@@ -1318,9 +1318,9 @@
     .mobile-nav {
       display: none;
       position: fixed;
-      /* top & left set by JS to sit 10px below nav pill, left-edge aligned */
+      /* top & right set by JS to sit 10px below nav pill, right-edge aligned */
       top: 90px;
-      left: 20px;
+      right: 20px;
       width: 210px;
       background: rgba(28,18,8,0.97);
       backdrop-filter: blur(24px);
@@ -2151,9 +2151,9 @@
 
   function positionDropdown() {
     const navRect = siteNav.getBoundingClientRect();
-    mobileNav.style.top   = (navRect.bottom + 10) + 'px';
-    mobileNav.style.right = '';
-    mobileNav.style.left  = navRect.left + 'px';
+    mobileNav.style.top  = (navRect.bottom + 10) + 'px';
+    mobileNav.style.left = '';
+    mobileNav.style.right = (window.innerWidth - navRect.right) + 'px';
   }
 
   function toggleMenu(open) {
