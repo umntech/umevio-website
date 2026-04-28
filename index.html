@@ -2205,6 +2205,7 @@
         headers: { 'Accept': 'application/json' }
       });
       if (res.ok) {
+        fbq('track', 'Lead');
         form.style.display = 'none';
         document.getElementById('form-success').style.display = 'block';
       } else {
