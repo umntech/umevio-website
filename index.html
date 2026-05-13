@@ -2212,6 +2212,17 @@
   );
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+  /* ─── Contact Form GA4 — form_start (first interaction) ── */
+  let formStarted = false;
+  document.getElementById('contact-form').querySelectorAll('input, select, textarea').forEach(function(el) {
+    el.addEventListener('focus', function() {
+      if (!formStarted) {
+        formStarted = true;
+        gtag('event', 'form_start', { form_id: 'contact-form', form_name: 'Contact Form' });
+      }
+    }, { once: false });
+  });
+
   /* ─── Contact Form Submit (Formspree) ──────────────────── */
   document.getElementById('contact-form').addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -2219,6 +2230,7 @@
     const btn = form.querySelector('.form-submit');
     btn.textContent = 'Sending…';
     btn.disabled = true;
+    gtag('event', 'form_submit', { form_id: 'contact-form', form_name: 'Contact Form' });
     try {
       const res = await fetch(form.action, {
         method: 'POST',
@@ -2227,6 +2239,7 @@
       });
       if (res.ok) {
         fbq('track', 'Lead');
+        gtag('event', 'generate_lead', { form_id: 'contact-form', form_name: 'Contact Form' });
         form.style.display = 'none';
         document.getElementById('form-success').style.display = 'block';
       } else {
