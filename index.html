@@ -12,12 +12,31 @@
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '1632776258010871');
-  fbq('track', 'PageView');
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=1632776258010871&ev=PageView&noscript=1"
   /></noscript>
   <!-- End Meta Pixel Code -->
+
+  <!-- Meta CAPI dedup helper — fires browser pixel + server CAPI with one shared event_id -->
+  <script>
+  window.umTrack = function (name, custom) {
+    var id = name + '.' + Date.now() + '.' + Math.random().toString(36).slice(2);
+    try { fbq('track', name, custom || {}, { eventID: id }); } catch (e) {}
+    try {
+      var fbp = (document.cookie.match(/_fbp=([^;]+)/) || [])[1] || '';
+      var fbc = (document.cookie.match(/_fbc=([^;]+)/) || [])[1] || '';
+      fetch('/api/capi', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        keepalive: true,
+        body: JSON.stringify({ event_name: name, event_id: id, page_url: location.href, fbp: fbp, fbc: fbc })
+      }).catch(function () {});
+    } catch (e) {}
+  };
+  // Fire PageView through the helper so the pixel + CAPI events deduplicate
+  umTrack('PageView');
+  </script>
 
   <!-- Google Analytics GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-R2N6FWQ5Q1"></script>
@@ -2029,7 +2048,7 @@
               </svg>
             </div>
             <div class="contact-detail-text">
-              <a href="https://wa.me/918447909251" target="_blank" rel="noopener" onclick="fbq('track','Contact')">WhatsApp us</a>
+              <a href="https://wa.me/918447909251" target="_blank" rel="noopener" onclick="umTrack('Contact')">WhatsApp us</a>
             </div>
           </div>
           <div class="contact-detail-item">
@@ -2238,7 +2257,7 @@
         headers: { 'Accept': 'application/json' }
       });
       if (res.ok) {
-        fbq('track', 'Lead');
+        umTrack('Lead');
         gtag('event', 'generate_lead', { form_id: 'contact-form', form_name: 'Contact Form' });
         form.style.display = 'none';
         document.getElementById('form-success').style.display = 'block';

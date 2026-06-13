@@ -1,2 +1,22 @@
 .DS_Store
 Thumbs.db
+
+# secrets — never commit (CAPI token lives in Vercel env vars, not in the repo)
+.env
+.env.*
+.vercel
+node_modules/
+
+# internal / working files — keep the website repo lean; never leak these
+FACEBOOK-2FA-RecoveryCodes.txt
+.claude/
+CLAUDE.md
+Brand Assets/
+Meta ads performance/
+Portfolio/
+Web design/
+humanizer/
+remotion/
+scripts/
+workflow/
+content-calendar.xlsx
